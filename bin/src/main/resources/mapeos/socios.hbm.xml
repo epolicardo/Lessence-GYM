@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "file:///c:/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.lessence.gymmaven.clases.Socios" table="Socios">
+        <id name="idSocio" column="idSocio">
+            <generator class="identity" />
+        </id>
+        <property column="fechaAlta" name="fechaAlta" type="timestamp"/>
+        <property column="aptoFisico" name="aptoFisico" type="string"/>
+        <property column="decJurada" name="decJurada" type="string"/>
+        <property column="foto" name="foto" type="string"/>
+        <property column="primerVencimiento" name="primerVencimiento" type="timestamp"/>
+        <property column="segundoVencimiento" name="segundoVencimiento" type="timestamp"/>
+        <one-to-one name="persona" cascade="all" />
+        
+        <list name="cuotas"  cascade="all" inverse="false">
+            <key>
+                <column name="idSocio"  />
+            </key>
+            <list-index>
+                <column name="idRegistro"  />
+            </list-index>
+            <one-to-many class="com.lessence.gymmaven.clases.Cuotas_registros" />
+        </list>
+       
+       <many-to-one name="estado">
+            <column name="idEstado"  />
+        </many-to-one>
+       
+        <!--Un socio puede tener muchas actividades-->
+        <list inverse="true" name="actividades" table="socios_actividades">
+            <key column="idSocio"/>
+            <list-index column="ORDEN"/>
+            <many-to-many class="com.lessence.gymmaven.clases.Actividades" column="idActividad"/>
+        </list>
+       
+        <!--Un socio puede tener muchos turnos-->
+        <!--
+            <list inverse="true" name="actividad" table="socios_actividades">
+            <key column="idSocio"/>
+            <list-index column="ORDEN"/>
+            <many-to-many class="com.lessence.gymmaven.clases.Actividades" column="idActividad"/>
+            </list>
+        -->
+    </class>
+    
+</hibernate-mapping>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "file:///c:/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.lessence.gymmaven.clases.Actividades" table="ACTIVIDADES">
+        <id name="idActividad" column="idActividad">
+            <generator class="identity"/>
+        </id>
+        <property name="actividad" column="actividad" type="string" />
+        <!--        <property name="usaCupo" column="usaCupo" type="int" />
+        <property name="cupo" column="cupo" type="int" />  -->
+        
+        <!--Cada actividad puede tener muchos profesores, cada profesor puede terner muchas actividades-->
+        <list cascade="all-delete-orphan" inverse="true" name="profesor" table="profesores_actividades">
+            <key column="idActividad"/>
+            <list-index column="Orden"/>
+            <many-to-many class="com.lessence.gymmaven.clases.Profesores" column="idProfesor"/>
+        </list>
+      
+<!--        Una actividad puede tener muchos socios>
+        <list cascade="all-delete-orphan"  name="socio" table="socios_actividades">
+            <key column="idActividad"/>
+            <index column="Orden"/>
+            <many-to-many class="com.lessence.gymmaven.clases.Socios" column="idSocio"/>
+        </list>-->
+        
+    </class>
+</hibernate-mapping>

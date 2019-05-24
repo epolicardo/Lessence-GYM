@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "file:///c:/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.lessence.gymmaven.clases.Domicilios" table="DOMICILIOS">
+        <id column="idDomicilio" name="idDomicilio">
+            <generator class="identity"/>
+        </id>
+        <property column="Calle" name="calle" type="string"/>
+        <property column="Nro" name="nro" type="string"/>
+        <property column="Piso" name="piso" type="string"/>
+        <property column="Dpto" name="dpto" type="string"/>
+        <property column="Barrio" name="barrio" type="string"/>
+        <property column="codigoPostal" name="codigoPostal" type="string"/>
+        <list inverse="true" name="personas" table="personas_domicilios">
+            <key column="idDomicilio"/>
+            <list-index column="ORDEN"/>
+            <many-to-many class="com.lessence.gymmaven.clases.Personas" column="idPersona"/>
+        </list>
+        <many-to-one name="localidad">
+            <column name="idLocalidad"  />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

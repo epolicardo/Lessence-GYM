@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "file:///c:/dtd/hibernate-mapping-3.0.dtd">
+ 
+<hibernate-mapping>
+
+    <class name="com.lessence.gymmaven.clases.Actividades_Socios_Turnos" table="ACTIVIDADES_SOCIOS_TURNOS">
+        <id name="idRelacion" column="idRelacion">
+            <generator class="identity"/>
+        </id>
+        <property name="pases" column="pases" type="int"/>
+        <property name="paseLibre" column="paseLibre" type="int"/>
+        <many-to-one name="socio" />
+        <many-to-one name="relacion"/>     
+    </class>
+  
+
+</hibernate-mapping>

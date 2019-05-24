@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "file:///c:/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.lessence.gymmaven.clases.Provincias" table="PROVINCIAS">
+    <id column="idProvincia" name="idProvincia">
+      <generator class="identity"/>
+    </id>
+    <property column="provincia" name="provincia" type="string"/>
+    <one-to-one name="pais" cascade="all" />
+  </class>
+</hibernate-mapping>

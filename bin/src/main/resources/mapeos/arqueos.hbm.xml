@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "file:///c:/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.lessence.gymmaven.clases.Arqueos" table="ARQUEOS">
+        <id name="idArqueo" column="idArqueo">
+            <generator class="identity"/>
+        </id>
+        <property name="fecha" column="fecha" type="timestamp"/>
+        <property name="b500" column="b500" type="float"/>
+        <property name="b100" column="b100" type="float"/>
+        <property name="b50" column="b50" type="float"/>
+        <property name="b20" column="b20" type="float"/>
+        <property name="b10" column="b10" type="float"/>
+        <property name="b5" column="b5" type="float"/>
+        <property name="b2" column="b2" type="float"/>
+        <property name="m1" column="m1" type="float"/>
+        <property name="m50" column="m50" type="float"/>
+        <property name="m25" column="m25" type="float"/>
+        <property name="m10" column="m10" type="float"/>
+        <property name="m5" column="m5" type="float"/>
+        <property name="efectivodisponible" column="efectivodisponible" type="float"/>
+        <property name="creditos" column="creditos" type="float"/>
+        <property name="egresos" column="egreesos" type="float"/>
+        <property name="ingresos" column="ingresos" type="float"/>
+        
+        
+
+<!--        Puede haber muchos pagos para un solo socio
+        <many-to-one name="socio">
+            <column name="idSocio"  />
+        </many-to-one>
+        
+        Puede haber muchos registros de pago para una sola forma de pago 
+        <many-to-one name="formaPago">
+            <column name="idFormaPago"  />
+        </many-to-one>
+        -->
+    </class>
+  
+
+</hibernate-mapping>

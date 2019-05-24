@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "file:///c:/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.lessence.gymmaven.clases.Turnos" table="TURNOS">
+        <id name="idTurno" column="idTurno">
+            <generator class="identity"/>
+        </id>
+        <property name="turno" column="turno" type="string" />
+
+        <one-to-one name="dia" cascade="all"/>
+        <one-to-one name="horario" cascade="all"/>        
+    </class>
+</hibernate-mapping>

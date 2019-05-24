@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "file:///c:/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.lessence.gymmaven.clases.FormasPago" table="FORMAS_PAGO">
+        <id name="idFormaPago" column="idFormaPago">
+            <generator class="identity"/>
+        </id>
+        <property name="formaPago" column="formaPago" type="string"/>
+
+        <list name="cuotas"  cascade="all" inverse="false">
+            <key>
+                <column name="idSocio"  />
+            </key>
+            <list-index>
+                <column name="idRegistro"  />
+            </list-index>
+            <one-to-many class="com.lessence.gymmaven.clases.Cuotas_registros" />
+        </list>
+        
+         <list name="movimientos"  cascade="all" inverse="false">
+            <key>
+                <column name="idFormaPago"  />
+            </key>
+            <list-index>
+                <column name="idMovimiento"  />
+            </list-index>
+            <one-to-many class="com.lessence.gymmaven.clases.Caja_diaria" />
+        </list>
+        
+        
+    </class>
+</hibernate-mapping>

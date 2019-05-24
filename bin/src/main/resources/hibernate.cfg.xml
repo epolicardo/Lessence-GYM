@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" 
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">-->
+
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"file:///c:/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <!-- parametros para la conexion a la base de datos -->
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <!-- Datos para la conexion a la base de datos-->
+        <property name="connection.url">jdbc:mysql://localhost/gym</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">30782195</property>
+        <!-- Configuracion del pool interno -->
+        <property name="connection.pool_size">1</property>
+        <!-- Dialecto de la base de datos -->
+        <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <!-- Otras propiedades importantes -->
+        <!--<property key="hibernate.hbm2ddl.import_files">/com/gp/domain/initial_data.sql</prop>-->
+        <property name="show_sql">true</property>
+        <property name="hbm2ddl.auto">update </property>
+        <!-- Archivos de mapeo  update / create-drop / validate-->
+        <!--    <mapping resource="gym/mapeos/Actividades.hbm.xml"/>
+        <mapping resource="gym/mapeos/Asistencias.hbm.xml"/>
+        <mapping resource="gym/mapeos/Cheques.hbm.xml"/>
+        <mapping resource="gym/mapeos/Compras.hbm.xml"/>
+        <mapping resource="gym/mapeos/Conexion.hbm.xml"/>
+        <mapping resource="gym/mapeos/Consultas.hbm.xml"/>
+        <mapping resource="gym/mapeos/Cuentas.hbm.xml"/>
+        <mapping resource="gym/mapeos/FechayHora.hbm.xml"/>
+        <mapping resource="gym/mapeos/Login.hbm.xml"/>
+        <mapping resource="gym/mapeos/Medidas.hbm.xml"/>
+        <mapping resource="gym/mapeos/Pagos.hbm.xml"/>
+        <mapping resource="gym/mapeos/Tablas.hbm.xml"/>
+        <mapping resource="gym/mapeos/Registros_Contables.hbm.xml"/>
+        <mapping resource="gym/mapeos/relaciones.hbm.xml"/>>-->
+<!--        <mapping resource="src/main/resources/mapeos/cuotasRegistros.hbm.xml"/>
+        <mapping resource="gym/mapeos/gastos.hbm.xml"/>
+        <mapping resource="gym/mapeos/actividades.hbm.xml"/>
+        <mapping resource="gym/mapeos/actividadesSociosTurnos.hbm.xml"/>
+        <mapping resource="gym/mapeos/cajaDiaria.hbm.xml"/>
+        <mapping resource="gym/mapeos/dias.hbm.xml"/>
+        <mapping resource="gym/mapeos/domicilios.hbm.xml"/>
+        <mapping resource="gym/mapeos/formasPago.hbm.xml"/>
+        <mapping resource="gym/mapeos/horarios.hbm.xml"/>
+        <mapping resource="gym/mapeos/localidades.hbm.xml"/>
+        <mapping resource="gym/mapeos/paises.hbm.xml"/>
+        <mapping resource="gym/mapeos/personas.hbm.xml"/>
+        <mapping resource="gym/mapeos/profesores.hbm.xml"/>
+        <mapping resource="gym/mapeos/provincias.hbm.xml"/>
+        <mapping resource="gym/mapeos/socios.hbm.xml"/>
+        <mapping resource="gym/mapeos/usuarios.hbm.xml"/>
+        <mapping resource="gym/mapeos/estados.hbm.xml"/>
+        <mapping resource="gym/mapeos/parametrosSistema.hbm.xml"/>
+        <mapping resource="gym/mapeos/Relaciones.hbm.xml"/>
+        <mapping resource="gym/mapeos/estadoCivil.hbm.xml"/>-->
+    </session-factory>
+</hibernate-configuration>

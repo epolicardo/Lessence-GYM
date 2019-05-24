@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "file:///c:/dtd/hibernate-mapping-3.0.dtd">
+
+    <hibernate-mapping>
+        <class name="com.lessence.gymmaven.clases.Usuarios" table="USUARIOS">
+            <id name="idUsuario" column="idUsuario">
+                <generator class="identity" />
+            </id>
+            <property column="usuario" name="usuario" type="string" />
+            <property column="clave" name="clave" type="string" />
+
+        </class>
+    </hibernate-mapping>

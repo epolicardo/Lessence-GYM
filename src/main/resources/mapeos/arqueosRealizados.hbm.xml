@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "file:///c:/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.lessence.gymmaven.clases.arqueosRealizados" table="arqueosRealizados">
+        <id name="idArqueo" column="idArqueo">
+            <generator class="identity"/>
+        </id>
+        <property name="fecha" column="fecha" type="timestamp"/>
+        <property name="total_sistema" column="total" type="float"/>
+        <property name="concepto" column="concepto" type="string"/>
+        <property name="debe" column="debe" type="float"/>
+        <property name="haber" column="haber" type="float"/>
+        <property name="saldo" column="saldo" type="float"/>
+
+        <!--Puede haber muchos registros de pago para una sola forma de pago--> 
+        <many-to-one name="formaPago">
+            <column name="idFormaPago"  />
+        </many-to-one>   
+
+
+    </class>
+  
+
+</hibernate-mapping>

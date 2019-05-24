@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e7b48eb4-f1a8-4f5e-9be7-4b3211cfb663">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="idfactura" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     comanda.`fecha` AS comanda_fecha,
+     comanda.`precio` AS comanda_precio,
+     platillo.`nombre` AS platillo_nombre,
+     platillo.`precio` AS platillo_precio,
+     platillo.`iva` AS platillo_iva,
+     descuento.`concepto` AS descuento_concepto,
+     descuento.`monto` AS descuento_monto,
+     factura.`idfactura` AS factura_idfactura,
+     cliente.`nombre` AS cliente_nombre,
+     cliente.`rfc` AS cliente_rfc,
+     cliente.`direccion` AS cliente_direccion,
+     cliente.`cp` AS cliente_cp
+FROM
+     `comanda` comanda INNER JOIN `comanda_has_descuento` comanda_has_descuento ON comanda.`idComanda` = comanda_has_descuento.`comanda_idComanda`
+     AND comanda_has_descuento.`comanda_usuario_id` = comanda.`mesa_nomesa`
+     AND comanda.`mesa_nomesa` = comanda_has_descuento.`comanda_mesa_nomesa`
+     AND comanda.`usuario_id` = comanda_has_descuento.`comanda_usuario_id`
+     INNER JOIN `comanda_has_platillo` comanda_has_platillo ON comanda.`idComanda` = comanda_has_platillo.`Comanda_idComanda`
+     AND comanda_has_platillo.`Comanda_idComanda` = comanda.`usuario_id`
+     AND comanda_has_descuento.`descuento_iddescuento` = comanda_has_platillo.`platillo_id`
+     INNER JOIN `platillo` platillo ON comanda_has_platillo.`platillo_id` = platillo.`id`
+     INNER JOIN `descuento` descuento ON comanda_has_descuento.`descuento_iddescuento` = descuento.`iddescuento`
+     INNER JOIN `factura_has_comanda` factura_has_comanda ON comanda.`idComanda` = factura_has_comanda.`comanda_idComanda`
+     AND comanda.`mesa_nomesa` = factura_has_comanda.`comanda_mesa_nomesa`
+     AND comanda.`usuario_id` = factura_has_comanda.`comanda_usuario_id`
+     INNER JOIN `factura` factura ON factura_has_comanda.`factura_idfactura` = factura.`idfactura`
+     AND factura.`cliente_idcliente` = factura_has_comanda.`factura_cliente_idcliente`
+     INNER JOIN `cliente` cliente ON factura.`cliente_idcliente` = cliente.`idcliente` WHERE factura.idfactura = $P{idfactura}]]>
+	</queryString>
+	<field name="comanda_fecha" class="java.sql.Date"/>
+	<field name="comanda_precio" class="java.lang.Double"/>
+	<field name="platillo_nombre" class="java.lang.String"/>
+	<field name="platillo_precio" class="java.lang.Double"/>
+	<field name="platillo_iva" class="java.lang.Double"/>
+	<field name="descuento_concepto" class="java.lang.String"/>
+	<field name="descuento_monto" class="java.lang.Double"/>
+	<field name="factura_idfactura" class="java.lang.Integer"/>
+	<field name="cliente_nombre" class="java.lang.String"/>
+	<field name="cliente_rfc" class="java.lang.String"/>
+	<field name="cliente_direccion" class="java.lang.String"/>
+	<field name="cliente_cp" class="java.lang.String"/>
+	<group name="platillo_nombre">
+		<groupExpression><![CDATA[$F{platillo_nombre}]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<textField>
+					<reportElement style="SubTitle" x="47" y="13" width="506" height="24" forecolor="#333333" uuid="674e45a5-8773-4dda-94fe-0e2ed68bc297"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{platillo_nombre}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement mode="Opaque" x="0" y="13" width="36" height="24" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="0772c455-1eb4-4eca-9f2d-e661a5199caf"/>
+				</rectangle>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<image>
+				<reportElement x="-20" y="0" width="595" height="64" uuid="4415f911-c789-4e3e-a68d-0fa119fc1f8b"/>
+				<imageExpression><![CDATA["wood.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="0" y="5" width="263" height="33" uuid="5a9122d8-8883-419d-ba9e-e4b1fb65b7c2"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Wood Title]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="63" y="39" width="200" height="22" forecolor="#FFFFFF" uuid="de5995d6-816c-42fb-93ee-6b091f929d32"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Wood SubTitle]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="21aac554-6f52-4df4-a7e5-33886f37d1e9"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="19" width="50" height="15" uuid="eab3fad1-9963-4e9c-a58e-694a711b7659"/>
+				<text><![CDATA[comanda_fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="50" y="19" width="50" height="15" uuid="d2a0c581-2f88-4acc-8620-3d6b4c858d27"/>
+				<text><![CDATA[comanda_precio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="100" y="19" width="50" height="15" uuid="a6fed832-6c9f-4c0e-95cd-17a569026266"/>
+				<text><![CDATA[platillo_precio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="150" y="19" width="50" height="15" uuid="9b380ede-e489-47d1-95f3-5d5cea6a010b"/>
+				<text><![CDATA[platillo_iva]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="200" y="19" width="50" height="15" uuid="509ace67-356e-43f1-af4b-89d7a0ed8055"/>
+				<text><![CDATA[descuento_concepto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="250" y="19" width="50" height="15" uuid="1909223d-2c2b-4b06-87ad-db067e5e82f8"/>
+				<text><![CDATA[descuento_monto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="300" y="19" width="50" height="15" uuid="9c0d0df3-88a8-45b2-ad18-07ece4cf45f6"/>
+				<text><![CDATA[factura_idfactura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="350" y="19" width="50" height="15" uuid="3d5d4c79-d7ae-41b5-b9a7-cf634e207b70"/>
+				<text><![CDATA[cliente_nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="400" y="19" width="50" height="15" uuid="88352802-a8dd-42f7-9e2c-54d144edb5d0"/>
+				<text><![CDATA[cliente_rfc]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="450" y="19" width="50" height="15" uuid="39351042-ae89-4744-9932-2601ade92186"/>
+				<text><![CDATA[cliente_direccion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="500" y="19" width="50" height="15" uuid="ecd45b17-bdd3-4810-b58e-5706838b1b30"/>
+				<text><![CDATA[cliente_cp]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="918bf5b7-3258-4e7c-8f56-e007bf673dce"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="50" height="15" uuid="70536913-ddb9-40c4-bb7e-361c27faab07"/>
+				<textFieldExpression><![CDATA[$F{comanda_fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="50" y="0" width="50" height="15" uuid="14258c31-f0c3-406a-a50c-b29a62db9ab9"/>
+				<textFieldExpression><![CDATA[$F{comanda_precio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="100" y="0" width="50" height="15" uuid="5919c7dd-b01c-43bc-b751-d72ddfcf1fe7"/>
+				<textFieldExpression><![CDATA[$F{platillo_precio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="150" y="0" width="50" height="15" uuid="a3316177-e7d1-4c88-8bbb-ffc83f6402c4"/>
+				<textFieldExpression><![CDATA[$F{platillo_iva}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="200" y="0" width="50" height="15" uuid="7d0a6420-a338-4909-8d6f-83c54fba2141"/>
+				<textFieldExpression><![CDATA[$F{descuento_concepto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="250" y="0" width="50" height="15" uuid="91cc95f4-a70a-4667-9282-6886d0b968c8"/>
+				<textFieldExpression><![CDATA[$F{descuento_monto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="300" y="0" width="50" height="15" uuid="182ea179-654d-4d3a-b667-1bdd438c0e37"/>
+				<textFieldExpression><![CDATA[$F{factura_idfactura}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="350" y="0" width="50" height="15" uuid="e19006b0-1e5a-4e46-9407-d77032a7abec"/>
+				<textFieldExpression><![CDATA[$F{cliente_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="400" y="0" width="50" height="15" uuid="c2121345-50eb-4fb0-a378-18c88266620f"/>
+				<textFieldExpression><![CDATA[$F{cliente_rfc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="450" y="0" width="50" height="15" uuid="e41abdf2-c2af-4c7f-9700-7ec4d2a5d353"/>
+				<textFieldExpression><![CDATA[$F{cliente_direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="500" y="0" width="50" height="15" uuid="52a78fbf-797a-45be-9867-5fa0bd1963a5"/>
+				<textFieldExpression><![CDATA[$F{cliente_cp}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="0e7a7762-de84-4091-9d67-508a26748c58"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="a9893fbc-a118-475a-8918-474bc687b65b"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="72cd6ee8-5102-4ede-8d9d-7ad33893d540"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="03aaa917-c4d5-4da2-9022-862b44d130d0"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

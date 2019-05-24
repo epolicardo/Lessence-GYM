@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "file:///c:/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.lessence.gymmaven.clases.Proveedores" table="Proveedores">
+        <id column="idProveedor" name="idProveedor">
+            <generator class="identity"/>
+        </id>
+        <property column="codigoProveedor" name="codigoProveedor" type="string"/>
+        <property column="denominacion" name="denominacion" type="string"/>
+        <property column="telefono" name="telefono" type="string"/>
+        <property column="web" name="web" type="string"/>
+        <property column="correo" name="correo" type="string"/>
+      
+       
+    </class>
+</hibernate-mapping>
+

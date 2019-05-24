@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "file:///c:/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.lessence.gymmaven.clases.Estados" table="ESTADOS">
+        <id column="idEstado" name="idEstado">
+            <generator class="identity"/>
+        </id>
+        <property column="estado" name="estado" type="string"/>
+    
+       
+        <!--Puede haber una lista de socios para cada estado-->
+          <list name="socios"  cascade="all" inverse="false">
+            <key>
+                <column name="idEstado"  />
+            </key>
+            <list-index>
+                <column name="idSocio"  />
+            </list-index>
+            <one-to-many class="com.lessence.gymmaven.clases.Socios" />
+        </list>
+       
+   <!--Puede haber una lista de profesores para cada estado-->
+          <list name="profesores"  cascade="all" inverse="false">
+            <key>
+                <column name="idEstado"  />
+            </key>
+            <list-index>
+                <column name="idProfesor"  />
+            </list-index>
+            <one-to-many class="com.lessence.gymmaven.clases.Profesores" />
+        </list>
+       
+
+    </class>
+</hibernate-mapping>

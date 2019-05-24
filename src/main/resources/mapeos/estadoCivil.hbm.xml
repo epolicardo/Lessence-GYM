@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "file:///c:/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.lessence.gymmaven.clases.EstadoCivil" table="ESTADO_CIVIL">
+        <id column="idEstado" name="idEstado">
+            <generator class="identity"/>
+        </id>
+        
+        <property name="estadoCivil" column="estadoCivil" type="string"/>
+        
+       
+<!--        Puede haber una lista de socios para cada estado
+        <list name="personas"  cascade="all" inverse="false">
+            <key>
+                <column name="idEstadoCivil"  />
+            </key>
+            <list-index>
+                <column name="idPersona"  />
+            </list-index>
+            <one-to-many class="com.lessence.gymmaven.clases.Personas" />
+        </list>-->
+       
+    </class>
+</hibernate-mapping>

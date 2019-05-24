@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "file:///c:/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.lessence.gymmaven.clases.Cuotas_registros" table="CUOTAS_REGISTROS">
+        <id name="idRegistro" column="idRegistro">
+            <generator class="identity"/>
+        </id>
+        <property name="fecha" column="fecha" type="timestamp"/>
+        <property name="importe" column="importe" type="float"/>
+        <property name="observaciones" column="observaciones" type="string"/>
+
+        <!--Puede haber muchos pagos para un solo socio-->
+        <many-to-one name="socio">
+            <column name="idSocio"  />
+        </many-to-one>
+        
+        <!--Puede haber muchos registros de pago para una sola forma de pago--> 
+        <many-to-one name="formaPago">
+            <column name="idFormaPago"  />
+        </many-to-one>
+        
+    </class>
+  
+
+</hibernate-mapping>
