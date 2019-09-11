@@ -12,7 +12,6 @@ package com.lessence.gymmaven.GUI;
 
 
 import com.lessence.gymmaven.clases.HibernateUtil;
-import com.lessence.gymmaven.clases.IntConexion;
 import com.lessence.gymmaven.clases.Localidades;
 import com.lessence.gymmaven.clases.Provincias;
 import java.util.List;
@@ -26,7 +25,7 @@ import org.hibernate.Session;
  *
  * @author Emiliano
  */
-public class Form_ABM_Localidades extends javax.swing.JDialog implements IntConexion {
+public class Form_ABM_Localidades extends javax.swing.JDialog {
 
     public Form_ABM_Localidades(java.awt.Frame parent, boolean modal) {
         super(parent, modal);

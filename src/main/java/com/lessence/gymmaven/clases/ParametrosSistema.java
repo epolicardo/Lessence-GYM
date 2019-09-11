@@ -15,12 +15,10 @@
  */
 package com.lessence.gymmaven.clases;
 
-import static com.lessence.gymmaven.clases.IntConexion.Cnx;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
@@ -48,7 +46,10 @@ public class ParametrosSistema {
     public static String db = "gym";
     public static String userDB = "root";
     public static String passDB = "30782195";
-    public static String passAdmin = "";
+    public static String dbRespaldo = "Ifj58oNk0a";
+    public static String userDBRespaldo = "RCnZu4fCs9";
+    public static String passDBRespaldo = "nAlBURMh3J";
+    public static String passAdmin = "30782195";
 
     public ParametrosSistema() {
 
@@ -76,10 +77,10 @@ public class ParametrosSistema {
 
     public static void LeerParametros() {
         List<ParametrosSistema> parametros = ParametrosSistema.listaParametros();
-        for (int i = 0; i < parametros.size(); i++) {
-            if (parametros.size() == 0) {
-                inicializarSistema();
-            } else {
+        if (parametros.isEmpty()) {
+            inicializarSistema();
+        } else {
+            for (int i = 0; i < parametros.size(); i++) {
                 ParametrosSistema parametro = parametros.get(i);
                 switch (parametro.idParametro) {
                     case 1:
@@ -104,14 +105,14 @@ public class ParametrosSistema {
                         nombreEmpresa = parametro.getValorString();
                         break;
                     case 8:
-                       imagenEmpresa  = parametro.getValorString();
+                        imagenEmpresa = parametro.getValorString();
                         break;
                     case 9:
-                         equipoDB = parametro.getValorString();
+                        equipoDB = parametro.getValorString();
                         break;
                     case 10:
                         passAdmin = parametro.getValorString();
-                    
+
                 }
             }
         }
@@ -173,41 +174,227 @@ public class ParametrosSistema {
         sesion.close();
     }
 
-    private static void inicializarSistema() {
-//        // TODO Aca cargo los datos de la base de datos inicial con stored procedure
-        Cnx.Conexion();
-        Cnx.Ejecutar("use gym;");
-        String SQL = "INSERT INTO `parametros` (`idParametro`, `parametro`, `valor`) VALUES (1, 'estadoCaja', 0);"
-                + "INSERT INTO `parametros` (`idParametro`, `parametro`, `valor`) VALUES (2, 'cantidadMovimientos', 0);"
-                + "INSERT INTO `parametros` (`idParametro`, `parametro`, `valor`) VALUES (3, 'mysqldump', 0);"
-                + "INSERT INTO `parametros` (`idParametro`, `parametro`, `valor`) VALUES (4, 'diasVigencia', 0);"
-                + "INSERT INTO `parametros` (`idParametro`, `parametro`, `valor`) VALUES (5, 'avisoVencimientos', 0);"
-                + "INSERT INTO `parametros` (`idParametro`, `parametro`, `valor`) VALUES (6, 'horasAsistencias', 0);"
-                + "INSERT INTO `parametros` (`idParametro`, `parametro`, `valor`) VALUES (7, 'nombreEmpresa', 0);"
-                + "INSERT INTO `parametros` (`idParametro`, `parametro`, `valor`) VALUES (8, 'imagenEmpresa', 0);"
-                + "INSERT INTO `parametros` (`idParametro`, `parametro`, `valor`) VALUES (9, 'equipoDB', 0);"
-                + "INSERT INTO `parametros` (`idParametro`, `parametro`, `valor`) VALUES (10, 'passAdmin', 0);";
+    public static void inicializarSistema() {
+//        // TODO Aca cargo los datos de la base de datos inicial
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
 
-//        String SQL = "INSERT INTO `formas_pago` (`idFormaPago`, `formaPago`) VALUES (1, 'Contado');"
-        //                + "INSERT INTO `formas_pago` (`idFormaPago`, `formaPago`) VALUES (2, 'Débito');"
-        //                + "INSERT INTO `formas_pago` (`idFormaPago`, `formaPago`) VALUES (3, 'Crédito');"
-        //                + "INSERT INTO `formas_pago` (`idFormaPago`, `formaPago`) VALUES (4, 'Cheques');"
-        //                + "INSERT INTO `dias` (`idDia`, `dia`) VALUES (1, 'Domingo');"
-        //                + "INSERT INTO `dias` (`idDia`, `dia`) VALUES (2, 'Lunes');"
-        //                + "INSERT INTO `dias` (`idDia`, `dia`) VALUES (3, 'Martes');"
-        //                + "INSERT INTO `dias` (`idDia`, `dia`) VALUES (4, 'Miércoles');"
-        //                + "INSERT INTO `dias` (`idDia`, `dia`) VALUES (5, 'Jueves');"
-        //                + "INSERT INTO `dias` (`idDia`, `dia`) VALUES (6, 'Viernes');"
-        //                + "INSERT INTO `dias` (`idDia`, `dia`) VALUES (7, 'Sábado');"
-        //                + "INSERT INTO `estados` (`idEstado`, `estado`) VALUES (1, 'Activo');"
-        //                + "INSERT INTO `estados` (`idEstado`, `estado`) VALUES (2, 'Inactivo');"
-        //                + "INSERT INTO `estado_civil` (`idEstado`, `estadoCivil`) VALUES (1, 'Soltero');"
-        //                + "INSERT INTO `estado_civil` (`idEstado`, `estadoCivil`) VALUES (2, 'Casado');"
-        //                + "INSERT INTO `estado_civil` (`idEstado`, `estadoCivil`) VALUES (3, 'Viudo');"
-        //                + "INSERT INTO `estado_civil` (`idEstado`, `estadoCivil`) VALUES (4, 'Divorciado');"
-        //                + "INSERT INTO `estado_civil` (`idEstado`, `estadoCivil`) VALUES (5, 'N/D');"
-        //                + "INSERT INTO `parametros` (`idParametro`, `parametro`, `valor`) VALUES (2, 'cantidadMovimientos', 0);";
-        Cnx.Ejecutar(SQL);
+        for (int i = 1; i < 6; i++) {
+            EstadoCivil estadoCivil = new EstadoCivil();
+            switch (i) {
+                case 1:
+                    sesion.beginTransaction();
+                    estadoCivil.setEstadoCivil("Soltero/a");
+                    sesion.save(estadoCivil);
+                    sesion.getTransaction().commit();
+                    break;
+                case 2:
+                    sesion.beginTransaction();
+                    estadoCivil.setEstadoCivil("Casado/a");
+                    sesion.save(estadoCivil);
+                    sesion.getTransaction().commit();
+                    break;
+                case 3:
+                    sesion.beginTransaction();
+                    estadoCivil.setEstadoCivil("Divorciado/a");
+                    sesion.save(estadoCivil);
+                    sesion.getTransaction().commit();
+                    break;
+                case 4:
+                    sesion.beginTransaction();
+                    estadoCivil.setEstadoCivil("Viudo/a");
+                    sesion.save(estadoCivil);
+                    sesion.getTransaction().commit();
+                    break;
+                case 5:
+                    sesion.beginTransaction();
+                    estadoCivil.setEstadoCivil("ND");
+                    sesion.save(estadoCivil);
+                    sesion.getTransaction().commit();
+                    break;
+
+            }
+        }
+        for (int i = 1; i < 3; i++) {
+            Estados estado = new Estados();
+            switch (i) {
+                case 1:
+                    sesion.beginTransaction();
+                    estado.setEstado("Activo");
+                    sesion.save(estado);
+                    sesion.getTransaction().commit();
+                    break;
+                case 2:
+                    sesion.beginTransaction();
+                    estado.setEstado("Inactivo");
+                    sesion.save(estado);
+                    sesion.getTransaction().commit();
+                    break;
+
+            }
+        }
+
+        // Formas de pago
+        for (int i = 1; i < 6; i++) {
+            FormasPago formaPago = new FormasPago();
+            switch (i) {
+                case 1:
+                    sesion.beginTransaction();
+                    formaPago.setFormaPago("Contado");
+                    sesion.save(formaPago);
+                    sesion.getTransaction().commit();
+                    break;
+                case 2:
+                    sesion.beginTransaction();
+                    formaPago.setFormaPago("Debito");
+                    sesion.save(formaPago);
+                    sesion.getTransaction().commit();
+                    break;
+                case 3:
+                    sesion.beginTransaction();
+                    formaPago.setFormaPago("Crédito");
+                    sesion.save(formaPago);
+                    sesion.getTransaction().commit();
+                    break;
+                case 4:
+                    sesion.beginTransaction();
+                    formaPago.setFormaPago("Transferencia");
+                    sesion.save(formaPago);
+                    sesion.getTransaction().commit();
+                    break;
+                case 5:
+                    sesion.beginTransaction();
+                    formaPago.setFormaPago("Cheque");
+                    sesion.save(formaPago);
+                    sesion.getTransaction().commit();
+                    break;
+            }
+        }
+
+        //Dias
+        for (int i = 1; i < 8; i++) {
+            Dias dia = new Dias();
+            switch (i) {
+                case 1:
+                    sesion.beginTransaction();
+                    dia.setDia("Lunes");
+                    sesion.save(dia);
+                    sesion.getTransaction().commit();
+                    break;
+                case 2:
+                    sesion.beginTransaction();
+                    dia.setDia("Martes");
+                    sesion.save(dia);
+                    sesion.getTransaction().commit();
+                    break;
+                case 3:
+                    sesion.beginTransaction();
+                    dia.setDia("Miércoles");
+                    sesion.save(dia);
+                    sesion.getTransaction().commit();
+                    break;
+                case 4:
+                    sesion.beginTransaction();
+                    dia.setDia("Jueves");
+                    sesion.save(dia);
+                    sesion.getTransaction().commit();
+                    break;
+                case 5:
+                    sesion.beginTransaction();
+                    dia.setDia("Viernes");
+                    sesion.save(dia);
+                    sesion.getTransaction().commit();
+                    break;
+                case 6:
+                    sesion.beginTransaction();
+                    dia.setDia("Sábado");
+                    sesion.save(dia);
+                    sesion.getTransaction().commit();
+                    break;
+                case 7:
+                    sesion.beginTransaction();
+                    dia.setDia("Domingo");
+                    sesion.save(dia);
+                    sesion.getTransaction().commit();
+                    break;
+            }
+        }
+
+        for (int i = 1; i < 11; i++) {
+            ParametrosSistema parametro = new ParametrosSistema();
+            switch (i) {
+                case 1:
+                    sesion.beginTransaction();
+                    parametro.setParametro("estadoCaja");
+                    parametro.setValor(0);
+                    sesion.save(parametro);
+                    sesion.getTransaction().commit();
+                    break;
+                case 2:
+                    sesion.beginTransaction();
+                    parametro.setParametro("cantidadMovimientos");
+                    parametro.setValor(0);
+                    sesion.save(parametro);
+                    sesion.getTransaction().commit();
+                    break;
+                case 3:
+                    sesion.beginTransaction();
+                    parametro.setParametro("mysqldump");
+                    parametro.setValor(0);
+                    sesion.save(parametro);
+                    sesion.getTransaction().commit();
+                    break;
+                case 4:
+                    sesion.beginTransaction();
+                    parametro.setParametro("diasVigencia");
+                    parametro.setValor(0);
+                    sesion.save(parametro);
+                    sesion.getTransaction().commit();
+                    break;
+                case 5:
+                    sesion.beginTransaction();
+                    parametro.setParametro("avisoVencimientos");
+                    parametro.setValor(0);
+                    sesion.save(parametro);
+                    sesion.getTransaction().commit();
+                    break;
+                case 6:
+                    sesion.beginTransaction();
+                    parametro.setParametro("horasAsistencias");
+                    parametro.setValor(0);
+                    sesion.save(parametro);
+                    sesion.getTransaction().commit();
+                    break;
+                case 7:
+                    sesion.beginTransaction();
+                    parametro.setParametro("nombreEmpresa");
+                    parametro.setValor(0);
+                    sesion.save(parametro);
+                    sesion.getTransaction().commit();
+                    break;
+                case 8:
+                    sesion.beginTransaction();
+                    parametro.setParametro("imagenEmpresa");
+                    parametro.setValor(0);
+                    sesion.save(parametro);
+                    sesion.getTransaction().commit();
+                    break;
+                case 9:
+                    sesion.beginTransaction();
+                    parametro.setParametro("equipoDB");
+                    parametro.setValor(0);
+                    sesion.save(parametro);
+                    sesion.getTransaction().commit();
+                    break;
+                case 10:
+                    sesion.beginTransaction();
+                    parametro.setParametro("passAdmin");
+                    parametro.setValor(0);
+                    sesion.save(parametro);
+                    sesion.getTransaction().commit();
+                    break;
+            }
+        }
+        sesion.close();
     }
 
     public static String getNombreEmpresa() {

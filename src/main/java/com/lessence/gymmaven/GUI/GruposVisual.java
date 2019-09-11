@@ -5,14 +5,8 @@
  */
 package com.lessence.gymmaven.GUI;
 
-import static com.lessence.gymmaven.clases.IntConexion.Cnx;
-import com.lessence.gymmaven.clases.ResultSetComboBoxModel;
 import com.lessence.gymmaven.clases.Socios;
-import java.sql.Date;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
@@ -194,52 +188,52 @@ public class GruposVisual extends javax.swing.JFrame {
 
     private void ActualizarGrilla(String Campo, int Valor) {
 
-        try {
-            ResultSet Resultado = Cnx.Consulta("SELECT * "
-                    + /*s.idSocios, p. idPersonas, p.Apellido , p.Nombre, r.idTurnos, r.idDisciplinas, r.idProfesores*/ "FROM "
-                    + "`gym`.`socios` S, gym.Personas P, gym.relacion_s_d_t_p R "
-                    + "where S.idPersonas = P.idPersonas and S.idSocios = R.idSocios and " + Campo + "=" + Valor);
-
-            int i = 0;
-            DefaultTableModel modelo = (DefaultTableModel) jTFiltrados.getModel();
-            modelo.setRowCount(i);
-            while (Resultado.next()) {
-                int id = Resultado.getInt("id");
-                String DNI = Resultado.getString("DNI");
-                int idDisciplinas = Resultado.getInt("idDisciplinas");
-                int idTurnos = Resultado.getInt("idturnos");
-                int idProfesores = Resultado.getInt("idProfesores");
-                String Nombre = Resultado.getString("Nombre");
-                String Apellido = Resultado.getString("Apellido");
-                String Calle = Resultado.getString("Calle");
-                String Nro = Resultado.getString("Nro");
-                String Piso = Resultado.getString("Piso");
-                String Dpto = Resultado.getString("Dpto");
-                int Localidad = Resultado.getInt("idLocalidad");
-                String Telefono = Resultado.getString("Telefono");
-                String Celular = Resultado.getString("Celular");
-                String Correo = Resultado.getString("CorreoElectronico");
-                Date FechaNacimiento = Resultado.getDate("FechaNacimiento");
-                int EstadoCivil = Resultado.getInt("EstadoCivil");
-                int Hijos = Resultado.getInt("Hijos");
-                int Sexo = Resultado.getInt("Sexo");
-                int Estado = Resultado.getInt("Estado");
-                Date FechaAlta = Resultado.getDate("FechaAlta");
-                String AptoFisico = "";
-                String Dec_Jurada = "";
-                String Foto = "";
-                Date PrimerVencimientoCuota = null;
-                Date SegundoVencimientoCuota = null;
+//        try {
+//            ResultSet Resultado = Cnx.Consulta("SELECT * "
+//                    + /*s.idSocios, p. idPersonas, p.Apellido , p.Nombre, r.idTurnos, r.idDisciplinas, r.idProfesores*/ "FROM "
+//                    + "`gym`.`socios` S, gym.Personas P, gym.relacion_s_d_t_p R "
+//                    + "where S.idPersonas = P.idPersonas and S.idSocios = R.idSocios and " + Campo + "=" + Valor);
 //
-//                Socios socionuevo = new Socios(id, DNI, Apellido, Nombre, Calle,
-//                        Nro, Piso, Dpto, Localidad, Telefono, Celular, Correo,
-//                        FechaNacimiento, EstadoCivil, Hijos, Sexo, Estado, FechaAlta, AptoFisico, Dec_Jurada, Foto, PrimerVencimientoCuota, SegundoVencimientoCuota);
-//                insertarEnJTableUnPersona(socionuevo, i);
-//                i++;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Form_Consulta_Socios.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//            int i = 0;
+//            DefaultTableModel modelo = (DefaultTableModel) jTFiltrados.getModel();
+//            modelo.setRowCount(i);
+//            while (Resultado.next()) {
+//                int id = Resultado.getInt("id");
+//                String DNI = Resultado.getString("DNI");
+//                int idDisciplinas = Resultado.getInt("idDisciplinas");
+//                int idTurnos = Resultado.getInt("idturnos");
+//                int idProfesores = Resultado.getInt("idProfesores");
+//                String Nombre = Resultado.getString("Nombre");
+//                String Apellido = Resultado.getString("Apellido");
+//                String Calle = Resultado.getString("Calle");
+//                String Nro = Resultado.getString("Nro");
+//                String Piso = Resultado.getString("Piso");
+//                String Dpto = Resultado.getString("Dpto");
+//                int Localidad = Resultado.getInt("idLocalidad");
+//                String Telefono = Resultado.getString("Telefono");
+//                String Celular = Resultado.getString("Celular");
+//                String Correo = Resultado.getString("CorreoElectronico");
+//                Date FechaNacimiento = Resultado.getDate("FechaNacimiento");
+//                int EstadoCivil = Resultado.getInt("EstadoCivil");
+//                int Hijos = Resultado.getInt("Hijos");
+//                int Sexo = Resultado.getInt("Sexo");
+//                int Estado = Resultado.getInt("Estado");
+//                Date FechaAlta = Resultado.getDate("FechaAlta");
+//                String AptoFisico = "";
+//                String Dec_Jurada = "";
+//                String Foto = "";
+//                Date PrimerVencimientoCuota = null;
+//                Date SegundoVencimientoCuota = null;
+////
+////                Socios socionuevo = new Socios(id, DNI, Apellido, Nombre, Calle,
+////                        Nro, Piso, Dpto, Localidad, Telefono, Celular, Correo,
+////                        FechaNacimiento, EstadoCivil, Hijos, Sexo, Estado, FechaAlta, AptoFisico, Dec_Jurada, Foto, PrimerVencimientoCuota, SegundoVencimientoCuota);
+////                insertarEnJTableUnPersona(socionuevo, i);
+////                i++;
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Form_Consulta_Socios.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     public void insertarEnJTableUnPersona(Socios socionuevo, int i) throws SQLException {
@@ -256,12 +250,12 @@ public class GruposVisual extends javax.swing.JFrame {
     }
 
     private void ActualizarCombos(String Base, String Tabla, JComboBox Combo, String Columna1, String Columna2) {
-        ResultSet rsl = Cnx.Consulta("select * from " + Base + "." + Tabla);
-        try {
-            Combo.setModel(new ResultSetComboBoxModel(rsl, Columna1, Columna2));
-        } catch (SQLException ex) {
-            ex.getErrorCode();
-        }
+//        ResultSet rsl = Cnx.Consulta("select * from " + Base + "." + Tabla);
+//        try {
+//            Combo.setModel(new ResultSetComboBoxModel(rsl, Columna1, Columna2));
+//        } catch (SQLException ex) {
+//            ex.getErrorCode();
+//        }
 
     }
 

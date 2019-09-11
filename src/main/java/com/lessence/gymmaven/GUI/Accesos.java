@@ -123,6 +123,7 @@ public class Accesos extends javax.swing.JFrame implements Runnable {
         }
 
         jTDocumento.requestFocus();
+        
     }
 
 //             }

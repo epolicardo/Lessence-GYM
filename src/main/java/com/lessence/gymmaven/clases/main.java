@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.lessence.gymmaven.clases;
 
 import com.lessence.gymmaven.GUI.Accesos;
@@ -9,18 +5,19 @@ import com.lessence.gymmaven.GUI.Inicial;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
 
 /**
  *
- * @author emiliano
+ * @author Emiliano Policardo
+ * 
+ * Se esta utilizando MariaDB 10.0.38 en puerto 3308.
+ * No compatible con MySQL 10 y el conector utilizado.
+ * Precaucion al actualizar el archivo pom.xml
  */
 public abstract class main implements Runnable {
 
@@ -34,7 +31,7 @@ public abstract class main implements Runnable {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         ParametrosSistema.Host();
         ParametrosSistema.LeerParametros();
         if (ParametrosSistema.getEquipoDB().equals(ParametrosSistema.hostname)) {

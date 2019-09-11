@@ -28,6 +28,15 @@ class Proveedores {
     private String telefono;
     private String web;
     private String correo;
+    private Domicilios domicilio;
+
+    public Domicilios getDomicilio() {
+        return domicilio;
+    }
+
+    public void setDomicilio(Domicilios domicilio) {
+        this.domicilio = domicilio;
+    }
 
     public Proveedores() {
     }

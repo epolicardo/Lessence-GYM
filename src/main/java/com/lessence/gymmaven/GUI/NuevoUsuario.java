@@ -1,12 +1,9 @@
 package com.lessence.gymmaven.GUI;
 
-import com.lessence.gymmaven.clases.IntConexion;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.swing.JOptionPane;
 
-public class NuevoUsuario extends javax.swing.JDialog implements IntConexion {
+public class NuevoUsuario extends javax.swing.JDialog {
 
     public NuevoUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -205,13 +202,13 @@ public class NuevoUsuario extends javax.swing.JDialog implements IntConexion {
         String GrantUsuario1 = "grant select, update, insert, create on cuentascorrientes.* to '" + Usuario + "'@'localhost' identified by '" + Clave + "';";
         String GrantUsuario2 = "grant select, update, insert, create on movimientos.* to '" + Usuario + "'@'localhost' identified by '" + Clave + "';";
         if (Clave.equals(RepetirClave)) {
-            Cnx.Conexion();
-            Cnx.Ejecutar(sql);
-            Cnx.Ejecutar(CrearUsuario);
-            Cnx.Ejecutar(GrantUsuario);
+//            Cnx.Conexion();
+//            Cnx.Ejecutar(sql);
+//            Cnx.Ejecutar(CrearUsuario);
+//            Cnx.Ejecutar(GrantUsuario);
            // Cnx.Ejecutar(GrantUsuario1);
             //Cnx.Ejecutar(GrantUsuario2);
-            Cnx.CerrarConexionDB();
+//            Cnx.CerrarConexionDB();
             JOptionPane.showMessageDialog(rootPane, "El Usuario '" + jTUsuario.getText() + "' fue generado con éxito. " +
                     "\n Vuelva a la pantalla anterior y efectue el logueo", "Generación de Usuarios", JOptionPane.INFORMATION_MESSAGE);
             jTDNI.setText(null);

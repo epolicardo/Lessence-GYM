@@ -1,17 +1,9 @@
 package com.lessence.gymmaven.GUI;
 
-import com.lessence.gymmaven.clases.IntConexion;
 import com.lessence.gymmaven.clases.Login;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
-public class LoginVisual extends javax.swing.JDialog implements IntConexion {
+public class LoginVisual extends javax.swing.JDialog{
 
     public LoginVisual(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -316,7 +308,7 @@ public class LoginVisual extends javax.swing.JDialog implements IntConexion {
 
         if (Clave.equals(ClaveBase)) {
             new Inicial().setVisible(true);
-            Cnx.Conexion();
+//            Cnx.Conexion();
             this.dispose();
 
         } else {

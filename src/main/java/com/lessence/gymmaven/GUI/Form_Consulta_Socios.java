@@ -5,19 +5,15 @@
  */
 package com.lessence.gymmaven.GUI;
 
-import com.lessence.gymmaven.clases.IntConexion;
 import com.lessence.gymmaven.clases.Actividades_Socios_Turnos;
 import com.lessence.gymmaven.clases.Cuotas_registros;
 import com.lessence.gymmaven.clases.HibernateUtil;
 import com.lessence.gymmaven.clases.RegistroAsistencias;
 import com.lessence.gymmaven.clases.Socios;
-import com.lessence.gymmaven.clases.claseFunciones;
 import com.lessence.gymmaven.clases.seteosGUI;
 import java.awt.Color;
 import java.awt.Component;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import javafx.scene.input.KeyCode;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -30,7 +26,7 @@ import org.hibernate.Session;
  *
  * @author Emiliano
  */
-public class Form_Consulta_Socios extends javax.swing.JDialog implements IntConexion {
+public class Form_Consulta_Socios extends javax.swing.JDialog {
 
     private String DNIseleccionado;
     private int personaaFiltrar;

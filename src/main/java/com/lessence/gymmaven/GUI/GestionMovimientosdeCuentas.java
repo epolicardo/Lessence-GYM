@@ -11,12 +11,9 @@ import com.lessence.gymmaven.clases.Cuotas_registros;
 import com.lessence.gymmaven.clases.Estados;
 import com.lessence.gymmaven.clases.FormasPago;
 import com.lessence.gymmaven.clases.HibernateUtil;
-import com.lessence.gymmaven.clases.IntConexion;
 import com.lessence.gymmaven.clases.ParametrosSistema;
 import com.lessence.gymmaven.clases.Personas;
-import com.lessence.gymmaven.clases.ResultSetComboBoxModel;
 import com.lessence.gymmaven.clases.Socios;
-import com.lessence.gymmaven.clases.claseFunciones;
 import com.lessence.gymmaven.clases.seteosGUI;
 import java.sql.SQLException;
 import java.time.Instant;
@@ -29,14 +26,13 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
  *
  * @author Emiliano
  */
-public class GestionMovimientosdeCuentas extends javax.swing.JDialog implements IntConexion {
+public class GestionMovimientosdeCuentas extends javax.swing.JDialog {
 
     /**
      * Creates new form GestionMovimientos
@@ -44,10 +40,17 @@ public class GestionMovimientosdeCuentas extends javax.swing.JDialog implements 
      */
     public GestionMovimientosdeCuentas(String DNI) {
         initComponents();
+        
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Criteria CriteriaFormaPago = sesion.createCriteria(FormasPago.class);
+        List<FormasPago> listaFormaPago = CriteriaFormaPago.list();
+        for (int i = 0; i < listaFormaPago.size(); i++) {
+            jCFormaPago.addItem(listaFormaPago.get(i).getFormaPago());
+        }
         ListarPagos(DNI);
         jPDatosTarjeta.setVisible(false);
         this.setLocationRelativeTo(null);
-
+        
     }
 
     /**
@@ -434,7 +437,6 @@ public class GestionMovimientosdeCuentas extends javax.swing.JDialog implements 
         });
 
         jCFormaPago.setFont(new java.awt.Font("BankGothic Lt BT", 0, 14)); // NOI18N
-        jCFormaPago.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jCFormaPago.setSelectedIndex(-1);
         jCFormaPago.setEnabled(false);
         jCFormaPago.addActionListener(new java.awt.event.ActionListener() {
@@ -731,11 +733,11 @@ public class GestionMovimientosdeCuentas extends javax.swing.JDialog implements 
     }// </editor-fold>//GEN-END:initComponents
 
     private void ListarPagos(String DNI) {
-
+        
         DefaultTableModel modelo = (DefaultTableModel) jTHistorial.getModel();
         modelo.setRowCount(0);
         Session sesion = HibernateUtil.getSessionFactory().openSession();
-        Query consultaSocios = sesion.createQuery("FROM Socios");
+        Criteria consultaSocios = sesion.createCriteria(Socios.class);
         List<Socios> listaSocios = consultaSocios.list();
         for (int i = 0; i < listaSocios.size(); i++) {
             Socios socio = listaSocios.get(i);
@@ -757,7 +759,7 @@ public class GestionMovimientosdeCuentas extends javax.swing.JDialog implements 
                         break;
                 }
                 jTNombre.setText(socio.getPersona().getApellido() + ", " + socio.getPersona().getNombre());
-                Query consultaCuentas = sesion.createQuery("FROM Cuotas_registros");
+                Criteria consultaCuentas = sesion.createCriteria(Cuotas_registros.class);
                 List<Cuotas_registros> lista_cuotas = consultaCuentas.list();
                 for (int j = 0; j < lista_cuotas.size(); j++) {
                     if (lista_cuotas.isEmpty()) {
@@ -769,28 +771,28 @@ public class GestionMovimientosdeCuentas extends javax.swing.JDialog implements 
                             Object[] fila = {seteosGUI.fechaCorta(cuotas.getFecha()), cuotas.getObservaciones(), cuotas.getFormaPago().getFormaPago(), cuotas.getImporte()};
                             modelo.addRow(fila);
                         }
-
+                        
                     }
                 }
             } else {
             }
         }
-
+        
     }
-
+    
     public void insertarEnJTable(Cuotas_registros NuevoPago, int i) throws SQLException {
         DefaultTableModel modelo = (DefaultTableModel) jTHistorial.getModel();
         modelo.setRowCount(i);
         Date Fecha = NuevoPago.getFecha();
         Float Importe = NuevoPago.getImporte();
         FormasPago FormaPago = NuevoPago.getFormaPago();
-
+        
         Object[] fila = {Fecha, FormaPago.getFormaPago(), Importe};
         modelo.addRow(fila);
-
+        
     }
     private void jBAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAñadirActionPerformed
-
+        
         for (int i = 0; i < jPPagos.getComponentCount(); i++) {
             jPPagos.getComponent(i).setEnabled(true);
         }
@@ -799,20 +801,20 @@ public class GestionMovimientosdeCuentas extends javax.swing.JDialog implements 
         }
         jBGuardar.setEnabled(true);
         jBCancelar.setEnabled(true);
-        claseFunciones.ComboGenerico(jCFormaPago, "formas_pago", "idFormaPago", "formaPago");
+//        claseFunciones.ComboGenerico(jCFormaPago, "formas_pago", "idFormaPago", "formaPago");
         jDCFecha.setDate(Date.from(Instant.now()));
         jCFormaPago.setSelectedIndex(0);
-
+        
         Calendar cal = Calendar.getInstance();
         cal.setTime(Date.from(Instant.now()));
         String nameMonth = cal.getDisplayName(Calendar.MONTH, Calendar.LONG, new Locale("es", "ES"));
         System.out.println(nameMonth);
-
+        
         jTConcepto.setText("Cuota " + nameMonth);
         jFTImporte.requestFocus();
 
     }//GEN-LAST:event_jBAñadirActionPerformed
-
+    
     private void Apertura() {
         Session sesion = HibernateUtil.getSessionFactory().openSession();
         sesion.beginTransaction();
@@ -828,22 +830,22 @@ public class GestionMovimientosdeCuentas extends javax.swing.JDialog implements 
         sesion.save(apertura);
         sesion.getTransaction().commit();
     }
-
+    
     public float saldoPrevio() {
-
+        
         Session sesion = HibernateUtil.getSessionFactory().openSession();
         Float saldo = 0.00f;
-        Query query_caja = sesion.createQuery("From Caja_diaria");
+        Criteria query_caja = sesion.createCriteria(Caja_diaria.class);
         List<Caja_diaria> lista_caja = query_caja.list();
         query_caja.setFirstResult(lista_caja.size() - 1 - ParametrosSistema.cantidadMovimientos);
         query_caja.setMaxResults(ParametrosSistema.cantidadMovimientos + 1);
         lista_caja = query_caja.list();
-
+        
         for (int i = 0; i < lista_caja.size(); i++) {
-
+            
             Caja_diaria movimiento = lista_caja.get(i);
             saldo = movimiento.getSaldo();
-
+            
         }
         sesion.close();
         return (saldo);
@@ -867,26 +869,31 @@ public class GestionMovimientosdeCuentas extends javax.swing.JDialog implements 
         }
 
     }//GEN-LAST:event_jBGuardarActionPerformed
-
+    
     private void GuardarRegistro() {
         int pasesDisponibles;
         int pases;
-
+        
         int Respu = JOptionPane.showConfirmDialog(this, "Desea continuar con el asiento del movimiento?", "Carga de pagos", JOptionPane.YES_NO_OPTION);
         if (Respu == 1) {
             JOptionPane.showMessageDialog(rootPane, "Canceló la operacion");
         } else {
-            ResultSetComboBoxModel FP = (ResultSetComboBoxModel) jCFormaPago.getModel();
+//            ResultSetComboBoxModel FP = (ResultSetComboBoxModel)jCFormaPago.getModel();
             String Importe = jFTImporte.getText();
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
             Cuotas_registros nuevo_pago = new Cuotas_registros();
             Personas persona = null;
             Socios socio = null;
-            int formapago = FP.getSelectedCodigo();
+            //TODO COrregir seleccio del combo, daba error de modelo
+            
             FormasPago formaPago = new FormasPago();
-            formaPago.setIdFormaPago(formapago);
-            Query consulta_socio = sesion.createQuery("From Socios");
+            ComboBoxModel<String> FP = jCFormaPago.getModel();
+//            ResultSetComboBoxModel fp = (ResultSetComboBoxModel) jCFormaPago.getModel();
+//            fp.setIdFormaPago();
+            //formaPago.setIdFormaPago(Integer.parseInt(FP.getElementAt(jCFormaPago.getSelectedIndex())));
+            formaPago.setIdFormaPago(jCFormaPago.getSelectedIndex()+1);
+            Criteria consulta_socio = sesion.createCriteria(Socios.class);
             List<Socios> socios_db = consulta_socio.list();
             for (int i = 0; i < socios_db.size(); i++) {
                 socio = socios_db.get(i);
@@ -899,7 +906,7 @@ public class GestionMovimientosdeCuentas extends javax.swing.JDialog implements 
                     nuevo_pago.setObservaciones(jTConcepto.getText());
                     nuevo_pago.setVencimientoAbonado(socio.getPrimerVencimiento());
                     CargarPases(socio);
-                    Query consulta = sesion.createQuery("FROM Caja_diaria");
+                    Criteria consulta = sesion.createCriteria(Caja_diaria.class);
                     List<Caja_diaria> caja = consulta.list();
                     int ultimo_registro = caja.size();
                     float saldo;
@@ -926,13 +933,13 @@ public class GestionMovimientosdeCuentas extends javax.swing.JDialog implements 
                     calendar.setTime(socio.getPrimerVencimiento()); // Actualizo vencimiento
                     int dias = 30;
                     int prorroga = 3;
-
+                    
                     socio.setVencimientoPrevio(socio.getPrimerVencimiento());
                     calendar.add(Calendar.DAY_OF_YEAR, dias);
                     socio.setPrimerVencimiento(calendar.getTime());
                     calendar.add(Calendar.DAY_OF_YEAR, prorroga);
                     socio.setSegundoVencimiento(calendar.getTime());
-
+                    
                     if (socio.getEstado().getIdEstado() == 2) {
                         if (JOptionPane.showConfirmDialog(this, "El socio se encuentra Inactivo.\n¿Desea cambiar el estado del socio?", "Gestión de Socios", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
                             Estados estado = new Estados();
@@ -940,25 +947,26 @@ public class GestionMovimientosdeCuentas extends javax.swing.JDialog implements 
                             socio.setEstado(estado);
                         }
                     }
-                    sesion.saveOrUpdate(socio);
+                    // TODO Chequear cambio update por saveOrUpdate
+                    sesion.update(socio);
                     sesion.getTransaction().commit();
                     sesion.close();
-
+                    
                     JOptionPane.showMessageDialog(this, "El pago fue cargado correctamente");
                     this.getContentPane().removeAll();
                     initComponents();
                 }
-
+                
             }
-
+            
         }
     }
-
+    
     private void CargarPases(Socios socio) {
         ComboBoxModel<String> modelo1 = jCActividades1.getModel();
         ComboBoxModel<String> modelo2 = jCActividades2.getModel();
         int pasesDisponibles = 0, pases = 0;
-
+        
         Session sesion = HibernateUtil.getSessionFactory().openSession();
         Criteria criteria = sesion.createCriteria(Actividades_Socios_Turnos.class
         );
@@ -996,7 +1004,7 @@ public class GestionMovimientosdeCuentas extends javax.swing.JDialog implements 
                         }
                         if (jRBPaseLibre.isSelected()) {
                             relacion.setPaseLibre(1);
-
+                            
                         }
                     }
                 }
@@ -1041,7 +1049,7 @@ public class GestionMovimientosdeCuentas extends javax.swing.JDialog implements 
     private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
         jDCFecha.setEnabled(false);
         jFTImporte.setEnabled(false);
-
+        
         jCFormaPago.setEnabled(false);
         jBGuardar.setEnabled(false);
         jBCancelar.setEnabled(false);
@@ -1062,13 +1070,13 @@ public class GestionMovimientosdeCuentas extends javax.swing.JDialog implements 
                 break;
         }
     }
-
+    
     private void TarjetasdeDébito() {
 
     }//GEN-LAST:event_jCFormaPagoActionPerformed
-
+    
     private void TarjetasdeCredito() {
-
+        
     }
 
     private void jFTImporte1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFTImporte1KeyPressed
@@ -1076,7 +1084,7 @@ public class GestionMovimientosdeCuentas extends javax.swing.JDialog implements 
 
         if (evt.getKeyCode() == 110) {
             evt.setKeyCode(44);
-
+            
         }
     }//GEN-LAST:event_jFTImporte1KeyPressed
     private void jFTImporteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFTImporteKeyPressed
@@ -1084,7 +1092,7 @@ public class GestionMovimientosdeCuentas extends javax.swing.JDialog implements 
 
         if (evt.getKeyCode() == 110) {
             evt.setKeyCode(44);
-
+            
         }
     }//GEN-LAST:event_jFTImporteKeyPressed
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
@@ -1106,17 +1114,17 @@ public class GestionMovimientosdeCuentas extends javax.swing.JDialog implements 
             for (int i = 0; i < jPPasesActividad1.getComponentCount(); i++) {
                 jPPasesActividad1.getComponent(i).setEnabled(true);
             }
-
+            
         } else {
             jPPasesActividad1.setEnabled(false);
-
+            
         }
 
     }//GEN-LAST:event_jcbPasesActividad1ActionPerformed
 
     private void jcbPasesActividad2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbPasesActividad2ActionPerformed
         if (jcbPasesActividad1.isSelected()) {
-
+            
             if (jcbPasesActividad2.isSelected()) {
                 if (jCActividades1.getItemCount() > 1) {
                     LlenarComboActividades(jCActividades2);
@@ -1216,7 +1224,7 @@ public class GestionMovimientosdeCuentas extends javax.swing.JDialog implements 
         );
         List<Actividades_Socios_Turnos> listaFiltrada = consultaActividades.list();
         listaFiltrada.clear();
-
+        
         List<Actividades_Socios_Turnos> listaActividades = consultaActividades.list();
         boolean existeActividad = false;
         for (int i = 0; i < listaActividades.size(); i++) {
@@ -1225,26 +1233,26 @@ public class GestionMovimientosdeCuentas extends javax.swing.JDialog implements 
                 existeActividad = false;
                 if (listaFiltrada.isEmpty()) {
                     listaFiltrada.add(actividad);
-
+                    
                 } else {
                     for (int j = 0; j < listaFiltrada.size(); j++) {
                         if (listaFiltrada.get(j).getRelacion().getActividad().getIdActividad() == actividad.getRelacion().getActividad().getIdActividad()) {
                             existeActividad = true;
                         } else {
                         }
-
+                        
                     }
                     if (existeActividad == false) {
                         listaFiltrada.add(actividad);
                     }
-
+                    
                 }
-
+                
             }
         }
         for (int h = 0; h < listaFiltrada.size(); h++) {
             comboaLlenar.addItem(listaFiltrada.get(h).getRelacion().getActividad().getActividad());
-
+            
         }
     }
 }

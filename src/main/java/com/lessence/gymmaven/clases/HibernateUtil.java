@@ -19,16 +19,17 @@ public class HibernateUtil {
             Configuration configuracion = new Configuration();
             String host = "localhost";
             String dbName = ParametrosSistema.db;
-            String urlDB = "jdbc:mysql://" + host + "/" + dbName;
+            String urlDB = "jdbc:mysql://" + host + ":3308/" + dbName + "?useLegacyDatetimeCode=false&serverTimezone=UTC";
 
-            configuracion.setProperty("hibernate.connection.url", urlDB);
+            configuracion.setProperty("hibernate.connection.url", urlDB );
+            
             configuracion.setProperty("hibernate.connection.username", ParametrosSistema.userDB);
             configuracion.setProperty("hibernate.connection.password", ParametrosSistema.passDB);
             configuracion.setProperty("hibernate.connecttion.pool_size", "1");
             configuracion.setProperty("dialect", "org.hibernate.dialect.MySQL5Dialect");
             configuracion.setProperty("show_sql", "true");
             configuracion.setProperty("format_sql", "true");
-            configuracion.setProperty("connection.driver_class", "com.mysql.jdbc.Driver");
+            configuracion.setProperty("connection.driver_class", "com.mysql.cj.jdbc.Driver");
             configuracion.setProperty("hibernate.enable_lazy_load_no_trans", "true");
             configuracion.setProperty("hbm2ddl.auto", "update"); 
             

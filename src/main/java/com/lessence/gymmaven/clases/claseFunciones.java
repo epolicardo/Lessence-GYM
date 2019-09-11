@@ -15,12 +15,9 @@
  */
 package com.lessence.gymmaven.clases;
 
-import static com.lessence.gymmaven.clases.IntConexion.Cnx;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.security.MessageDigest;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
@@ -38,15 +35,12 @@ import org.hibernate.Session;
  */
 public final class claseFunciones {
 
-    public static void ComboGenerico(JComboBox combo, String clase, String columna1, String columna2) {
-        try {
-            Cnx.Conexion();
-            ResultSet rsl = Cnx.Consulta("select * from gym." + clase);
-            combo.setModel(new ResultSetComboBoxModel(rsl, columna1, columna2));
-        } catch (SQLException ex) {
-            ex.getErrorCode();
-        }
+    public void InicializarCombos(JComboBox comboBox){
+
     }
+    
+    
+    
 
     public static void LlenarJTables(JTable tabla, Class clase) {
 //        Session sesion = HibernateUtil.getSessionFactory().openSession();

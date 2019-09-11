@@ -12,7 +12,7 @@ package com.lessence.gymmaven.GUI;
 
 import com.lessence.gymmaven.clases.Actividades;
 import com.lessence.gymmaven.clases.HibernateUtil;
-import com.lessence.gymmaven.clases.IntConexion;
+
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +24,7 @@ import org.hibernate.Session;
  *
  * @author Emiliano
  */
-public class Form_ABMActividades extends javax.swing.JDialog implements IntConexion {
+public class Form_ABMActividades extends javax.swing.JDialog {
 
     public Form_ABMActividades(java.awt.Frame parent, boolean modal) {
         super(parent, modal);

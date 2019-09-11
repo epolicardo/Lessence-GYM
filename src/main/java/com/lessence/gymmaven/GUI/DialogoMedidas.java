@@ -5,14 +5,13 @@
  */
 package com.lessence.gymmaven.GUI;
 
-import com.lessence.gymmaven.clases.IntConexion;
 
 
 /**
  *
  * @author Emiliano
  */
-public class DialogoMedidas extends javax.swing.JDialog implements IntConexion {
+public class DialogoMedidas extends javax.swing.JDialog{
 
     /**
      * Creates new form DialogoMedidas

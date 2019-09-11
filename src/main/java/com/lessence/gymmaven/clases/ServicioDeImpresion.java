@@ -150,11 +150,7 @@ public class ServicioDeImpresion {
 
     //TODO arreglo de impresoras de caja
     //TODO arreglo de impresoras de cocina
-    public static void main(String[] args) {
-        //ServicioDeImpresion impresion = new ServicioDeImpresion();
-        //    ServicioDeImpresion.imprimirGenerico("hola mundo!");
-
-    }
+  
 
     private static String agregarLogoATicket(String textoAImprimir) {
         //TODO hacer pruebas de impresión de logo

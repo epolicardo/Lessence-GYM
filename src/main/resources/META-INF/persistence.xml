@@ -5,8 +5,11 @@
     <class>com.lessence.gymmaven.GUI.Actividades</class>
     <class>com.lessence.gymmaven.GUI.Horarios</class>
     <class>com.lessence.gymmaven.GUI.Profesores</class>
+    <class>com.lessence.gymmaven.GUI.Estados</class>
+    <class>com.lessence.gymmaven.GUI.Localidades</class>
+    <class>com.lessence.gymmaven.GUI.EstadoCivil</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gym?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3308/gym?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="30782195"/>

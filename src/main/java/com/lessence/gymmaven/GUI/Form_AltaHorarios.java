@@ -13,8 +13,6 @@ package com.lessence.gymmaven.GUI;
 import com.lessence.gymmaven.clases.Dias;
 import com.lessence.gymmaven.clases.HibernateUtil;
 import com.lessence.gymmaven.clases.Horarios;
-import com.lessence.gymmaven.clases.IntConexion;
-import static com.lessence.gymmaven.clases.IntConexion.Cnx;
 import com.lessence.gymmaven.clases.ResultSetComboBoxModel;
 import java.awt.Color;
 import java.sql.ResultSet;
@@ -29,7 +27,7 @@ import org.hibernate.Session;
  *
  * @author Emiliano
  */
-public class Form_AltaHorarios extends javax.swing.JDialog implements IntConexion {
+public class Form_AltaHorarios extends javax.swing.JDialog {
 
     public Form_AltaHorarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -243,14 +241,14 @@ public class Form_AltaHorarios extends javax.swing.JDialog implements IntConexio
     }// </editor-fold>//GEN-END:initComponents
 
     private void ActualizarDias() {
-        try {
-            Cnx.Conexion();
-            ResultSet rsl = Cnx.Consulta("select * from gym.dias");
-            jCDias.setModel(new ResultSetComboBoxModel(rsl, "idDia", "Dia"));
-        } catch (SQLException ex) {
-            ex.getErrorCode();
-        }
-        jCDias.setSelectedIndex(0);
+//        try {
+//            Cnx.Conexion();
+//            ResultSet rsl = Cnx.Consulta("select * from gym.dias");
+//            jCDias.setModel(new ResultSetComboBoxModel(rsl, "idDia", "Dia"));
+//        } catch (SQLException ex) {
+//            ex.getErrorCode();
+//        }
+//        jCDias.setSelectedIndex(0);
     }
 
 

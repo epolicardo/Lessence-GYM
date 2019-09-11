@@ -1,28 +1,21 @@
 package com.lessence.gymmaven.GUI;
 
-import com.lessence.gymmaven.clases.IntConexion;
 import com.lessence.gymmaven.clases.Cheques;
-import com.lessence.gymmaven.clases.ResultSetComboBoxModel;
 import com.lessence.gymmaven.clases.ResultSetComboBoxModelObject;
-import com.lessence.gymmaven.clases.claseFunciones;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 
-public class Form_ABMCheques extends javax.swing.JFrame implements IntConexion {
+public class Form_ABMCheques extends javax.swing.JFrame {
 
   
 
     public Form_ABMCheques(java.awt.Frame parent, boolean modal) {
 
         initComponents();
-        claseFunciones.ComboGenerico(jCBanco, "Bancos", "idBanco", "Banco");
-        claseFunciones.ComboGenerico(jCPlaza, "Localidades", "idLocalidad", "Localidad");
+        //todo llenar combos
+        //claseFunciones.ComboGenerico(jCBanco, "Bancos", "idBanco", "Banco");
+        //claseFunciones.ComboGenerico(jCPlaza, "Localidades", "idLocalidad", "Localidad");
 //        ActualizarLocalidades();
 //        ActualizarBancos();
         ActualizarGrilla();
@@ -30,81 +23,81 @@ public class Form_ABMCheques extends javax.swing.JFrame implements IntConexion {
     }
     
     private void ActualizarLocalidades() {
-        ResultSet rsl = Cnx.Consulta("select * from localidades");
-        try {
-            jCPlaza.setModel(new ResultSetComboBoxModel(rsl, "idLocalidades", "Localidades"));
-        } catch (SQLException ex) {
-            ex.getErrorCode();
-        }
+//        ResultSet rsl = Cnx.Consulta("select * from localidades");
+//        try {
+//            jCPlaza.setModel(new ResultSetComboBoxModel(rsl, "idLocalidades", "Localidades"));
+//        } catch (SQLException ex) {
+//            ex.getErrorCode();
+//        }
     }
 
     private void ActualizarBancos() {
-        ResultSet rsb = Cnx.Consulta("select * from bancos");
-        try {
-            jCBanco.setModel(new ResultSetComboBoxModel(rsb, "idBanco", "Banco"));
-        } catch (SQLException ex) {
-            ex.getErrorCode();
-        }
+//        ResultSet rsb = Cnx.Consulta("select * from bancos");
+//        try {
+//            jCBanco.setModel(new ResultSetComboBoxModel(rsb, "idBanco", "Banco"));
+//        } catch (SQLException ex) {
+//            ex.getErrorCode();
+//        }
     }
 
     private void ActualizarGrilla() {
         
-
-        try {
-            ResultSet RsCheques = Cnx.Consulta("Select * from cheques");
-
-            int i = 0;
-            while (RsCheques.next()) {
-                String idCheque = RsCheques.getString("idCheque");
-                String idCliente = RsCheques.getString("idCliente");
-                String Banco = RsCheques.getString("idBanco");
-                String Plaza = RsCheques.getString("idPlaza");
-                String FechaCobro = RsCheques.getString("FechaCobro");
-                String Importe = RsCheques.getString("Importe");
-                Cheques chequenuevo = new Cheques(idCheque, idCliente, Banco, Plaza, FechaCobro, Importe);
-                insertarEnJTableUnCheque(chequenuevo, i);
-                i++;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Form_ABMCheques.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//
+//        try {
+//            ResultSet RsCheques = Cnx.Consulta("Select * from cheques");
+//
+//            int i = 0;
+//            while (RsCheques.next()) {
+//                String idCheque = RsCheques.getString("idCheque");
+//                String idCliente = RsCheques.getString("idCliente");
+//                String Banco = RsCheques.getString("idBanco");
+//                String Plaza = RsCheques.getString("idPlaza");
+//                String FechaCobro = RsCheques.getString("FechaCobro");
+//                String Importe = RsCheques.getString("Importe");
+//                Cheques chequenuevo = new Cheques(idCheque, idCliente, Banco, Plaza, FechaCobro, Importe);
+//                insertarEnJTableUnCheque(chequenuevo, i);
+//                i++;
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Form_ABMCheques.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     private void insertarEnJTableUnCheque(Cheques chequenuevo, int i) {
-        String LocalidadStr = null;
-        String ClienteStr = null;
-        String BancoStr = null;
-
-        ResultSet RsLocalidades = Cnx.Consulta("Select * from localidades where idLocalidades =" + chequenuevo.getPlaza());
-        ResultSet RsClientes = Cnx.Consulta("Select * from clientes where idCliente =" + chequenuevo.getIdCliente());
-        ResultSet RsBancos = Cnx.Consulta("Select * from bancos where idBanco =" + chequenuevo.getBanco());
-
-
-        try {
-            while (RsLocalidades.next()) {
-                   LocalidadStr = RsLocalidades.getString("Localidades");
-            }
-            while (RsClientes.next()) {
-                   ClienteStr = RsClientes.getString("Apellido") +  ", " + RsClientes.getString("Nombre");
-            }
-            while (RsBancos.next()) {
-                   BancoStr = RsBancos.getString("Banco");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Form_ABMCheques.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-
-        DefaultTableModel modelo = (DefaultTableModel) jTDatosObtenidos.getModel();
-        modelo.setNumRows(i);
-
-
-
-
-        Object[] fila = {chequenuevo.getIdCheque(), ClienteStr, BancoStr,
-            LocalidadStr, chequenuevo.getFechaCobro().substring(0, 10), chequenuevo.getImporte()
-        };
-        modelo.addRow(fila);
+//        String LocalidadStr = null;
+//        String ClienteStr = null;
+//        String BancoStr = null;
+//
+//        ResultSet RsLocalidades = Cnx.Consulta("Select * from localidades where idLocalidades =" + chequenuevo.getPlaza());
+//        ResultSet RsClientes = Cnx.Consulta("Select * from clientes where idCliente =" + chequenuevo.getIdCliente());
+//        ResultSet RsBancos = Cnx.Consulta("Select * from bancos where idBanco =" + chequenuevo.getBanco());
+//
+//
+//        try {
+//            while (RsLocalidades.next()) {
+//                   LocalidadStr = RsLocalidades.getString("Localidades");
+//            }
+//            while (RsClientes.next()) {
+//                   ClienteStr = RsClientes.getString("Apellido") +  ", " + RsClientes.getString("Nombre");
+//            }
+//            while (RsBancos.next()) {
+//                   BancoStr = RsBancos.getString("Banco");
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Form_ABMCheques.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//
+//        DefaultTableModel modelo = (DefaultTableModel) jTDatosObtenidos.getModel();
+//        modelo.setNumRows(i);
+//
+//
+//
+//
+//        Object[] fila = {chequenuevo.getIdCheque(), ClienteStr, BancoStr,
+//            LocalidadStr, chequenuevo.getFechaCobro().substring(0, 10), chequenuevo.getImporte()
+//        };
+//        modelo.addRow(fila);
     }
 
     @SuppressWarnings("unchecked")
@@ -379,30 +372,30 @@ public class Form_ABMCheques extends javax.swing.JFrame implements IntConexion {
         //String FehaCobro = FechayHora.FechaBD();
 
         double Importe = Double.parseDouble(jFTImporte.getText());
-        Cnx.Ejecutar("Insert into cheques values ('" + idCheque + "','" + idCliente + "','" + idBanco + "','" + idPlaza + "','" + FehaCobro + "','" + Importe + "')");
+      //  Cnx.Ejecutar("Insert into cheques values ('" + idCheque + "','" + idCliente + "','" + idBanco + "','" + idPlaza + "','" + FehaCobro + "','" + Importe + "')");
         ActualizarGrilla();
         JOptionPane.showMessageDialog(this, "El cheque fué cargado con éxito", "ABM Cheques", JOptionPane.INFORMATION_MESSAGE);
 
 }//GEN-LAST:event_jBGuardarActionPerformed
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
-        try {
-            int Cliente = 0;
-            try {
-                Cliente = Integer.parseInt(jTCliente.getText());
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(rootPane, "El campo codigo de cliente es requerido.");
-            }
+//        try {
+//            int Cliente = 0;
+//            try {
+//                Cliente = Integer.parseInt(jTCliente.getText());
+//            } catch (Exception e) {
+//                JOptionPane.showMessageDialog(rootPane, "El campo codigo de cliente es requerido.");
+//            }
 
-            ResultSet Resultado = Cnx.Consulta("Select * from clientes where idCliente='" + Cliente + "';");
-
-            while (Resultado.next()) {
-                jTEntregadoPor.setText(Resultado.getString("Apellido") + ", " + Resultado.getString("Nombre"));
-                jCBanco.requestFocus();
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Form_ABMCheques.class.getName()).log(Level.SEVERE, null, ex);
-        }
+           // ResultSet Resultado = Cnx.Consulta("Select * from clientes where idCliente='" + Cliente + "';");
+//
+//            while (Resultado.next()) {
+//                jTEntregadoPor.setText(Resultado.getString("Apellido") + ", " + Resultado.getString("Nombre"));
+//                jCBanco.requestFocus();
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Form_ABMCheques.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_jBBuscarActionPerformed
 
     private void jTClienteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTClienteFocusGained

@@ -45,6 +45,7 @@ public class Inicial extends javax.swing.JFrame implements Runnable {
 
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
+        Personalizacion();
 
     }
 
@@ -109,19 +110,25 @@ public class Inicial extends javax.swing.JFrame implements Runnable {
         sesion.close();
     }
 
-    public class MyCellRenderer extends DefaultTableCellRenderer {
+    private void Personalizacion() {
+        jLImagenEmpresa.setIcon(new javax.swing.ImageIcon((ParametrosSistema.getImagenEmpresa())));
+        this.setTitle(ParametrosSistema.getNombreEmpresa() + " - Full Gym" );
+  
+}
 
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            boolean valid = String.valueOf(table.getValueAt(row, 2)).equals("Activo");
-            component.setForeground(valid ? Color.black : Color.red);
-            component.setFont((new java.awt.Font("BankGothic Lt BT", 0, 14)));
-            return component;
-        }
+public class MyCellRenderer extends DefaultTableCellRenderer {
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        boolean valid = String.valueOf(table.getValueAt(row, 2)).equals("Activo");
+        component.setForeground(valid ? Color.black : Color.red);
+        component.setFont((new java.awt.Font("BankGothic Lt BT", 0, 14)));
+        return component;
     }
+}
 
-    private void ActualizarDatosdeInicio() {
+private void ActualizarDatosdeInicio() {
 //        Reloj();
         Socios.VerificaEstadosySituaciones();
         Session sesion = HibernateUtil.getSessionFactory().openSession();
@@ -136,7 +143,12 @@ public class Inicial extends javax.swing.JFrame implements Runnable {
         DefaultTableModel tabla_vencimientos = (DefaultTableModel) jT_Vencimientos.getModel();
         jT_Vencimientos.setFont(new java.awt.Font("BankGothic Lt BT", 0, 14));
         jtUltimasAsistencias.setFont(new java.awt.Font("BankGothic Lt BT", 0, 14));
-        jT_Vencimientos.setDefaultRenderer(Object.class, new MyCellRenderer());
+        jT_Vencimientos.setDefaultRenderer(Object
+
+.class  
+
+
+, new MyCellRenderer());
         tabla_vencimientos.setRowCount(0);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(Date.from(Instant.now())); // Asignamos el calendario la fecha actual 
@@ -155,9 +167,10 @@ public class Inicial extends javax.swing.JFrame implements Runnable {
     }
 
     @Override
-    public Image getIconImage() {
+        public Image getIconImage() {
+        
         Image retValue = Toolkit.getDefaultToolkit().
-                getImage(ClassLoader.getSystemResource("recursos/Lessence.png"));
+                getImage(ClassLoader.getSystemResource(""));
 
         return retValue;
     }
@@ -177,15 +190,16 @@ public class Inicial extends javax.swing.JFrame implements Runnable {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jT_Vencimientos = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
         jPBSociosActivos = new javax.swing.JProgressBar();
-        jButton1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        jLImagenEmpresa = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jtUltimasAsistencias = new javax.swing.JTable();
-        jbVender = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jButton3 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jbVender = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -305,16 +319,6 @@ public class Inicial extends javax.swing.JFrame implements Runnable {
             jT_Vencimientos.getColumnModel().getColumn(2).setPreferredWidth(40);
         }
 
-        jButton3.setBackground(new java.awt.Color(255, 0, 0));
-        jButton3.setFont(new java.awt.Font("BankGothic Lt BT", 1, 14)); // NOI18N
-        jButton3.setText("Volver a la ventana de Accesos");
-        jButton3.setOpaque(false);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         jPBSociosActivos.setBackground(new java.awt.Color(255, 0, 51));
         jPBSociosActivos.setFont(new java.awt.Font("BankGothic Lt BT", 1, 24)); // NOI18N
         jPBSociosActivos.setForeground(new java.awt.Color(255, 0, 51));
@@ -324,17 +328,13 @@ public class Inicial extends javax.swing.JFrame implements Runnable {
         jPBSociosActivos.setString("");
         jPBSociosActivos.setStringPainted(true);
 
-        jButton1.setFont(new java.awt.Font("BankGothic Lt BT", 1, 14)); // NOI18N
-        jButton1.setText("Habilitar Pases en Negativo");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        jLImagenEmpresa.setBackground(new java.awt.Color(255, 255, 255));
+        jLImagenEmpresa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLImagenEmpresa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLImagenEmpresaMouseClicked(evt);
             }
         });
-
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/Fondo Lessence - copia.png"))); // NOI18N
 
         jtUltimasAsistencias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -354,14 +354,6 @@ public class Inicial extends javax.swing.JFrame implements Runnable {
         });
         jScrollPane3.setViewportView(jtUltimasAsistencias);
 
-        jbVender.setFont(new java.awt.Font("BankGothic Lt BT", 1, 24)); // NOI18N
-        jbVender.setText("Vender");
-        jbVender.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbVenderActionPerformed(evt);
-            }
-        });
-
         jButton2.setText("Actualizar Listado de Vencimientos");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -376,16 +368,66 @@ public class Inicial extends javax.swing.JFrame implements Runnable {
             }
         });
 
+        jButton3.setBackground(new java.awt.Color(255, 0, 0));
+        jButton3.setFont(new java.awt.Font("BankGothic Lt BT", 1, 14)); // NOI18N
+        jButton3.setText("Volver a la ventana de Accesos");
+        jButton3.setOpaque(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setFont(new java.awt.Font("BankGothic Lt BT", 1, 14)); // NOI18N
+        jButton1.setText("Habilitar Pases en Negativo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jbVender.setFont(new java.awt.Font("BankGothic Lt BT", 1, 24)); // NOI18N
+        jbVender.setText("Vender");
+        jbVender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbVenderActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                    .addComponent(jbVender, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbVender, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton3});
+
         jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jPBSociosActivos, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLImagenEmpresa, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jScrollPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jbVender, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -396,19 +438,16 @@ public class Inicial extends javax.swing.JFrame implements Runnable {
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPBSociosActivos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jDesktopPane1Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLImagenEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jbVender, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton2))
-                            .addComponent(jScrollPane1))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 835, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -418,15 +457,10 @@ public class Inicial extends javax.swing.JFrame implements Runnable {
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbVender, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLImagenEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -435,14 +469,12 @@ public class Inicial extends javax.swing.JFrame implements Runnable {
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPBSociosActivos, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-
-        jDesktopPane1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton3});
 
         getContentPane().add(jDesktopPane1, java.awt.BorderLayout.CENTER);
 
@@ -574,6 +606,11 @@ public class Inicial extends javax.swing.JFrame implements Runnable {
         jMenu2.add(jmABMProductos);
 
         jMenuItem21.setText("ABM Proveedores");
+        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem21ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem21);
 
         jMenuItem20.setText("ABM Familias");
@@ -770,6 +807,8 @@ public class Inicial extends javax.swing.JFrame implements Runnable {
         int showConfirmDialog = JOptionPane.showConfirmDialog(this, "Esta acción setea datos por defecto de la base de datos. Desea continuar?");
         if (showConfirmDialog==0) {
             System.out.println("Inicializando base de datos...");
+            System.out.println("No operativo");
+            ParametrosSistema.inicializarSistema();
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
@@ -917,6 +956,14 @@ public class Inicial extends javax.swing.JFrame implements Runnable {
         
     }//GEN-LAST:event_jMResumenCajaActionPerformed
 
+    private void jLImagenEmpresaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLImagenEmpresaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLImagenEmpresaMouseClicked
+
+    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem21ActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -929,8 +976,8 @@ public class Inicial extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JLabel jLImagenEmpresa;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JMenuItem jMResumenCaja;
     private javax.swing.JMenu jMenu1;
@@ -977,6 +1024,7 @@ public class Inicial extends javax.swing.JFrame implements Runnable {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JProgressBar jPBSociosActivos;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jT_Vencimientos;

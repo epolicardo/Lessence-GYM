@@ -10,12 +10,9 @@ import com.lessence.gymmaven.clases.Domicilios;
 import com.lessence.gymmaven.clases.EstadoCivil;
 import com.lessence.gymmaven.clases.Estados;
 import com.lessence.gymmaven.clases.HibernateUtil;
-import com.lessence.gymmaven.clases.IntConexion;
 import com.lessence.gymmaven.clases.Localidades;
 import com.lessence.gymmaven.clases.Personas;
 import com.lessence.gymmaven.clases.Profesores;
-import com.lessence.gymmaven.clases.Socios;
-import com.lessence.gymmaven.clases.claseFunciones;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +25,7 @@ import org.hibernate.Session;
  *
  * @author Emiliano
  */
-public class Form_ABMProfesores extends javax.swing.JDialog implements IntConexion {
+public class Form_ABMProfesores extends javax.swing.JDialog {
     
     private int OpcionSexo;
     String Piso = "";
@@ -46,7 +43,7 @@ public class Form_ABMProfesores extends javax.swing.JDialog implements IntConexi
         inicioFormulario();
         jBGuardaProfesor.setText("Guardar");
         
-        jCEstado.setSelectedIndex(0); //Activo por defecto
+//        jCEstado.setSelectedIndex(0); //Activo por defecto
     }
     
     public Form_ABMProfesores(String DNI) {
@@ -60,9 +57,29 @@ public class Form_ABMProfesores extends javax.swing.JDialog implements IntConexi
     
     public void inicioFormulario() {
         initComponents();
-        claseFunciones.ComboGenerico(jCLocalidades, "Localidades", "idLocalidad", "Localidad");
-        claseFunciones.ComboGenerico(jCEstadoCivil, "Estado_Civil", "idEstado", "estadoCivil");
-        claseFunciones.ComboGenerico(jCEstado, "Estados", "idEstado", "Estado");
+        
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Criteria CriteriaEstados = sesion.createCriteria(Estados.class);
+        List<Estados> listaEstados = CriteriaEstados.list();
+        for (int i = 0; i < listaEstados.size(); i++) {
+            jCEstado.addItem(listaEstados.get(i).getEstado());
+        }
+        Criteria CriteriaLocalidad = sesion.createCriteria(Localidades.class);
+        List<Localidades> listaLocalidad = CriteriaLocalidad.list();
+        for (int i = 0; i < listaLocalidad.size(); i++) {
+            jCLocalidades.addItem(listaLocalidad.get(i).getLocalidad());
+        }
+        Criteria CriteriaEstadoCivil = sesion.createCriteria(EstadoCivil.class);
+        List<EstadoCivil> listaEstadoCivil = CriteriaEstadoCivil.list();
+        for (int i = 0; i < listaEstadoCivil.size(); i++) {
+            jCEstadoCivil.addItem(listaEstadoCivil.get(i).getEstadoCivil());
+        }
+        
+        
+        
+//        claseFunciones.ComboGenerico(jCLocalidades, "Localidades", "idLocalidad", "Localidad");
+//        claseFunciones.ComboGenerico(jCEstadoCivil, "Estado_Civil", "idEstado", "estadoCivil");
+//        claseFunciones.ComboGenerico(jCEstado, "Estados", "idEstado", "Estado");
         this.setLocationRelativeTo(null);
         labelDNI.setVisible(false);
         jDCAlta.setDate(Date.from(Instant.now()));

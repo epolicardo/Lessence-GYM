@@ -10,12 +10,10 @@ import com.lessence.gymmaven.clases.HibernateUtil;
 import com.lessence.gymmaven.clases.Horarios;
 import com.lessence.gymmaven.clases.Profesores;
 import com.lessence.gymmaven.clases.Relaciones;
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.Session;
-import org.hibernate.exception.ConstraintViolationException;
 
 /**
  *

@@ -13,12 +13,7 @@ package com.lessence.gymmaven.GUI;
 import com.lessence.gymmaven.clases.Dias;
 import com.lessence.gymmaven.clases.HibernateUtil;
 import com.lessence.gymmaven.clases.Horarios;
-import com.lessence.gymmaven.clases.IntConexion;
-import static com.lessence.gymmaven.clases.IntConexion.Cnx;
-import com.lessence.gymmaven.clases.ResultSetComboBoxModel;
 import java.awt.Color;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -29,7 +24,7 @@ import org.hibernate.Session;
  *
  * @author Emiliano
  */
-public class Form_ABM_Horarios extends javax.swing.JDialog implements IntConexion {
+public class Form_ABM_Horarios extends javax.swing.JDialog{
 
     public Form_ABM_Horarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -236,14 +231,12 @@ public class Form_ABM_Horarios extends javax.swing.JDialog implements IntConexio
     }// </editor-fold>//GEN-END:initComponents
 
     private void ActualizarDias() {
-        try {
-            Cnx.Conexion();
-            ResultSet rsl = Cnx.Consulta("select * from gym.dias");
-            jCDias.setModel(new ResultSetComboBoxModel(rsl, "idDia", "Dia"));
-        } catch (SQLException ex) {
-            ex.getErrorCode();
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Criteria CriteriaDias = sesion.createCriteria(com.lessence.gymmaven.clases.Dias.class);
+        List<com.lessence.gymmaven.clases.Dias> listaDias = CriteriaDias.list();
+        for (int i = 0; i < listaDias.size(); i++) {
+            jCDias.addItem(listaDias.get(i).getDia());
         }
-        jCDias.setSelectedIndex(0);
     }
 
 
@@ -286,8 +279,8 @@ public class Form_ABM_Horarios extends javax.swing.JDialog implements IntConexio
     }//GEN-LAST:event_jSHastaStateChanged
 
     private void LlenarTurno() {
-        ResultSetComboBoxModel dias = (ResultSetComboBoxModel) jCDias.getModel();
-        jTTurno.setText(dias.getSelectedItem().toString() + " - "
+        
+        jTTurno.setText(jCDias.getSelectedItem().toString() + " - "
                 + jSDesde.getModel().getValue().toString() + " - "
                 + jSHasta.getModel().getValue().toString());
     }

@@ -50,10 +50,28 @@ public class Form_ABMSocios extends javax.swing.JFrame {
 
     public void inicioFormulario() {
         initComponents();
-        claseFunciones.ComboGenerico(jCLocalidades, "Localidades", "idLocalidad", "Localidad");
-        claseFunciones.ComboGenerico(jCEstadoCivil, "Estado_Civil", "idEstado", "estadoCivil");
-        claseFunciones.ComboGenerico(jCEstado, "Estados", "idEstado", "Estado");
-        jCEstado.setSelectedIndex(0);
+//            claseFunciones.InicializarCombos(jCEstado);
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Criteria CriteriaEstados = sesion.createCriteria(Estados.class);
+        List<Estados> listaEstados = CriteriaEstados.list();
+        for (int i = 0; i < listaEstados.size(); i++) {
+            jCEstado.addItem(listaEstados.get(i).getEstado());
+        }
+        Criteria CriteriaEstadoCivil = sesion.createCriteria(EstadoCivil.class);
+        List<EstadoCivil> listaEstadoCivil = CriteriaEstadoCivil.list();
+        for (int i = 0; i < listaEstadoCivil.size(); i++) {
+            jCEstadoCivil.addItem(listaEstadoCivil.get(i).getEstadoCivil());
+        }
+        Criteria CriteriaLocalidades = sesion.createCriteria(Localidades.class);
+        List<Localidades> listaLocalidades = CriteriaLocalidades.list();
+        for (int i = 0; i < listaLocalidades.size(); i++) {
+            jCLocalidades.addItem(listaLocalidades.get(i).getLocalidad());
+        }
+
+//        claseFunciones.ComboGenerico(jCLocalidades, "Localidades", "idLocalidad", "Localidad");
+//        claseFunciones.ComboGenerico(jCEstadoCivil, "Estado_Civil", "idEstado", "estadoCivil");
+//        claseFunciones.ComboGenerico(jCEstado, "Estados", "idEstado", "Estado");
+//        jCEstado.setSelectedIndex(0);
         jDCAlta.setDate(Date.from(Instant.now()));
         this.setLocationRelativeTo(null);
 //        this.setExtendedState(MAXIMIZED_BOTH);
@@ -64,7 +82,8 @@ public class Form_ABMSocios extends javax.swing.JFrame {
         jBGuardaSocio.setText("Guardar");
         labelDNI.setVisible(false);
         jcbVigente.setSelected(true);
-        jCEstado.setSelectedIndex(0);
+        //todo Iniciar combo
+//      jCEstado.setSelectedIndex(0);
         jDCAlta.setDate(Date.from(Instant.now()));
 
     }
@@ -233,7 +252,6 @@ public class Form_ABMSocios extends javax.swing.JFrame {
         jLabel15.setText("Fecha de Nacimiento");
 
         jCEstadoCivil.setFont(new java.awt.Font("BankGothic Lt BT", 0, 14)); // NOI18N
-        jCEstadoCivil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Soltero", "Casado" }));
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sexo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("BankGothic Lt BT", 0, 14))); // NOI18N
         jPanel6.setFont(new java.awt.Font("BankGothic Lt BT", 0, 14)); // NOI18N
@@ -554,7 +572,7 @@ public class Form_ABMSocios extends javax.swing.JFrame {
                                     .addComponent(jLabel4)
                                     .addComponent(jTNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jTDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 32, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -809,7 +827,7 @@ public class Form_ABMSocios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBGuardaSocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardaSocioActionPerformed
-       
+
         if ("Guardar".equals(jBGuardaSocio.getText())) {
 
             if (bandera == false) {
@@ -986,33 +1004,33 @@ public class Form_ABMSocios extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jTDocumentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTDocumentoFocusLost
-        List<Personas> consultaBase = Personas.consultaBase();
-        if (consultaBase.isEmpty()) {
-            nuevoSocio();
-            bandera = true;
-        } else {
-
-            for (int i = 0; i < consultaBase.size(); i++) {
-                Personas p = consultaBase.get(i);
-                if (jTDocumento.getText().equals(p.getDNI())) {
-                    //La persona ya existe
-                    JOptionPane.showMessageDialog(this, "El número de DNI está asignado a una persona existente", "ABM Socios", JOptionPane.ERROR_MESSAGE);
-                    i = consultaBase.size();
-                    bandera = true;
-                    if (0 == JOptionPane.showConfirmDialog(this,
-                            "Desea cargar los datos de la persona ya existente?\nEsto reemplazará los campos que se hayan utilizado",
-                            "ABM Socios", JOptionPane.YES_NO_OPTION)) {
-
-                        jBGuardaSocio.setText("Guardar Cambios");
-                        RellenarTextos(jTDocumento.getText());
-                        jTDocumento.setText(String.valueOf(jTDocumento.getText()));
-                        labelDNI.setVisible(false);
-                        labelDNI.setText(jTDocumento.getText());
-                    }
-                }
-            }
-
-        }
+//        List<Personas> consultaBase = Personas.consultaBase();
+//        if (consultaBase.isEmpty()) {
+//            nuevoSocio();
+//            bandera = true;
+//        } else {
+//
+//            for (int i = 0; i < consultaBase.size(); i++) {
+//                Personas p = consultaBase.get(i);
+//                if (jTDocumento.getText().equals(p.getDNI())) {
+//                    //La persona ya existe
+//                    JOptionPane.showMessageDialog(this, "El número de DNI está asignado a una persona existente", "ABM Socios", JOptionPane.ERROR_MESSAGE);
+//                    i = consultaBase.size();
+//                    bandera = true;
+//                    if (0 == JOptionPane.showConfirmDialog(this,
+//                            "Desea cargar los datos de la persona ya existente?\nEsto reemplazará los campos que se hayan utilizado",
+//                            "ABM Socios", JOptionPane.YES_NO_OPTION)) {
+//
+//                        jBGuardaSocio.setText("Guardar Cambios");
+//                        RellenarTextos(jTDocumento.getText());
+//                        jTDocumento.setText(String.valueOf(jTDocumento.getText()));
+//                        labelDNI.setVisible(false);
+//                        labelDNI.setText(jTDocumento.getText());
+//                    }
+//                }
+//            }
+//
+//        }
     }//GEN-LAST:event_jTDocumentoFocusLost
 
     /**
